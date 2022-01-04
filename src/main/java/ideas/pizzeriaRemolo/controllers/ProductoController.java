@@ -1,6 +1,7 @@
 package ideas.pizzeriaRemolo.controllers;
 
 import ideas.pizzeriaRemolo.entidades.Producto;
+import ideas.pizzeriaRemolo.errores.ErrorServicio;
 import ideas.pizzeriaRemolo.servicios.ProductoServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,7 @@ public class ProductoController {
 	}
 
 	@PostMapping
-	public Producto getProductoById(@RequestBody Producto producto) {
+	public Producto saveProducto(@RequestBody Producto producto) {
 		//return productoService.saveProducto(producto);
 		return new Producto();
 	}
@@ -51,7 +52,7 @@ public class ProductoController {
 	}
 
 	@DeleteMapping(path = "/{id}")
-	public boolean deleteProducto(@PathVariable String id){
+	public boolean deleteProducto(@PathVariable String id) throws ErrorServicio {
 		productoService.deleteById(id);
 		return true;
 	}

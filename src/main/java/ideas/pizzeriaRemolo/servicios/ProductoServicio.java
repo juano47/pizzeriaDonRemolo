@@ -63,10 +63,12 @@ public class ProductoServicio {
         return productoRepositorio.findAll();
     }
     @Transactional
-    public void deleteById(String id) {
+    public void deleteById(String id) throws ErrorServicio {
         Optional<Producto> optional = productoRepositorio.findById(id);
         if (optional.isPresent()) {
             productoRepositorio.delete(optional.get());
+        }else {
+            throw new ErrorServicio("El producto " + id + " no fue encontrado");
         }
     }
 }
