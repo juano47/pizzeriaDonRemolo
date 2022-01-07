@@ -1,9 +1,11 @@
 
 package ideas.pizzeriaRemolo.entidades;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -16,20 +18,21 @@ public class Producto {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    private String productoId;
     private String categoria;
     private String nombre;
     private Double precio;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "fotoId")
     private Foto foto;
 
-    public String getId() {
-        return id;
+    public String getProductoId() {
+        return productoId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setProductoId(String productoId) {
+        this.productoId = productoId;
     }
 
     public String getCategoria() {

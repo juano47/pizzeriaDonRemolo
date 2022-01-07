@@ -40,15 +40,13 @@ public class ProductoController {
 	}
 
 	@PostMapping
-	public Producto saveProducto(@RequestBody Producto producto) {
-		//return productoService.saveProducto(producto);
-		return new Producto();
+	public Producto saveProducto(@RequestBody Producto producto) throws ErrorServicio {
+		return productoService.guardarProducto(producto);
 	}
 
 	@PutMapping(path = "/{id}")
-	public Producto updateProducto(@PathVariable String id, @RequestBody Producto producto) {
-		//return productoService.updateProducto(id, producto);
-		return new Producto();
+	public Producto updateProducto(@PathVariable String id, @RequestBody Producto producto) throws ErrorServicio {
+		return productoService.modificarProducto(id, producto);
 	}
 
 	@DeleteMapping(path = "/{id}")

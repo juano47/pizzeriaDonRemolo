@@ -20,38 +20,23 @@ public class ProductoServicio {
     private FotoServicio fotoServicio;
 
     @Transactional
-    public Producto guardarProducto(MultipartFile archivo,String categoria, String nombre,Double precio) throws ErrorServicio{
-
-        Producto producto = new Producto();
-        producto.setNombre(nombre);
-        producto.setCategoria(categoria);
-        producto.setPrecio(precio);
-
-        Foto foto=fotoServicio.guardar(archivo);
-        producto.setFoto(foto);
-
+    public Producto guardarProducto(Producto producto) throws ErrorServicio{
         return productoRepositorio.save(producto);
     }
 
     @Transactional
-    public void modificarProducto(MultipartFile archivo,String id,String categoria, String nombre,Double precio) throws ErrorServicio{
+    public Producto modificarProducto(String id, Producto producto) throws ErrorServicio{
 
-        Optional<Producto>respuesta=productoRepositorio.findById(id);
-        if(respuesta.isPresent()){
-            Producto producto=respuesta.get();
-            producto.setNombre(nombre);
-            producto.setCategoria(categoria);
-            producto.setPrecio(precio);
-
-            String idFoto = null;
-            if (producto.getFoto() != null) {
-                idFoto = producto.getFoto().getId();
-            }
-
-            Foto foto = fotoServicio.actualizar(idFoto, archivo);
-            producto.setFoto(foto);
-
-            productoRepositorio.save(producto);
+        Optional<Producto>productoBdOptional=productoRepositorio.findById(id);
+        if(productoBdOptional.isPresent()){
+            Producto productoBd=productoBdOptional.get();
+            productoBd.setNombre(producto.getNombre());
+            productoBd.setCategoria(producto.getCategoria());
+            productoBd.setPrecio(producto.getPrecio());
+            //WARNING: si la foto no trae ID se crea otra
+            productoBd.setFoto(producto.getFoto());
+            productoRepositorio.save(productoBd);
+            return productoBd;
         }else{
             throw new ErrorServicio("No se encuentra el producto");     }
     }
