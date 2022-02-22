@@ -13,7 +13,6 @@ import org.hibernate.annotations.GenericGenerator;
 
     @Entity
 public class Producto {
- 
 
     @Id
     @GeneratedValue(generator = "uuid")
